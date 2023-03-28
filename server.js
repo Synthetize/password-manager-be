@@ -6,7 +6,11 @@ const {json} = require("express");
 
 const app = express();
 const uri = process.env.uri;
-const connection = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1});
+const connection = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1
+});
 const bcrypt = require('bcrypt');
 const {compareSync} = require("bcrypt");
 const usersCollection = connection.db('password-manager').collection('users');
@@ -35,32 +39,32 @@ async function close() {
 }
 
 
+app.get('/login', (req, res) => {
+    res.render('login.ejs');
+});
 
 
+app.post('/api/login', async (req, res) => {
+    await connect();
+    try {
+        let email = req.body.email;
+        let pass = req.body.password;
+        let user = await usersCollection.findOne({"email": email});
+        let hashingPass = createHash('sha256').update(pass.concat(user.salt)).digest('hex');
+        if ( hashingPass === user.password) {
+            console.log("Login successful");
+            res.status(200).send();
+        } else {
+            console.log("Credentials are wrong");
+            res.status(500).redirect('/login');
+        }
+    } catch {
+        console.log("Login failed");
+        res.status(500).redirect('/login');
+    }
+    await close()
 
-
-// app.get('/login', (req, res) => {
-//     res.render('login.ejs');
-// });
-//
-//
-//
-// app.post('/api/login', async (req, res) => {
-//     await connect();
-//     // try {
-//         let email = req.body.email;
-//         let pass = req.body.password;
-//         console.log(email);
-//         await connection.db('password-manager').collection('users').find(user => user.email === email)
-//     // } catch {
-//     //     console.log("Login failed");
-//     //     res.status(500).redirect('/login');
-//     // }
-//     await close()
-//
-// });
-
-
+});
 
 
 app.get('/register', (req, res) => {
@@ -70,10 +74,12 @@ app.get('/register', (req, res) => {
 app.post('/api/register', async (req, res) => {
     await connect();
     let salt = randomBytes(15).toString('hex');
+
     function hashing(password, salt) {
         const toHash = password.concat(salt)
         return createHash('sha256').update(toHash).digest('hex');
     }
+
     //insert user into database
     try {
         await usersCollection.insertOne({
@@ -91,7 +97,6 @@ app.post('/api/register', async (req, res) => {
     }
     await close()
 });
-
 
 app.listen(3000, () => {
     console.log('Listening on port 3000');
