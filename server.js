@@ -3,7 +3,7 @@ const {createHash} = require('crypto');
 const {randomBytes} = require('node:crypto');
 const express = require('express');
 const {json} = require("express");
-
+const cors = require('cors');
 const app = express();
 const uri = process.env.uri;
 const connection = new MongoClient(uri, {
@@ -17,6 +17,9 @@ const usersCollection = connection.db('password-manager').collection('users');
 
 
 app.use(express.urlencoded({extended: true}));
+app.use(cors({
+    origin: 'http://localhost:8080',
+}));
 app.set('view engine', 'ejs');
 
 
