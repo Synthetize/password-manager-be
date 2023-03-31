@@ -1,21 +1,24 @@
-const {connect, close, usersCollection} = require("./db_connect-close");
 const {randomBytes} = require("node:crypto");
 const {createHash} = require("crypto");
+const jwt = require("jsonwebtoken");
+const {usersCollection} = require("./db_connect-close");
+
 
 
 
 
 
 async function login(req, res) {
-    //await connect();
     try {
         let email = req.body.email;
         let pass = req.body.password;
-        let user = await usersCollection.findOne({"email": email});
-        let hashingPass = createHash('sha256').update(pass.concat(user.salt)).digest('hex');
-        if ( hashingPass === user.password) {
+        let userFromDB = await usersCollection.findOne({"email": email});
+        let hashingPass = createHash('sha256').update(pass.concat(userFromDB.salt)).digest('hex');
+        if ( hashingPass === userFromDB.password) {
+            //creating jwt token using email, name and surname as payload
+            const accessToken = jwt.sign({email: userFromDB.email, name: userFromDB.name, surname: userFromDB.surname}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15s'});
             console.log("Login successful");
-            res.status(200).send();
+            res.status(200).json({accessToken: accessToken});
         } else {
             console.log("Credentials are wrong");
             res.status(500).redirect('/login');
@@ -24,7 +27,6 @@ async function login(req, res) {
         console.log("Login failed");
         res.status(500).redirect('/login');
     }
-    //await close()
 }
 
 
@@ -38,7 +40,6 @@ async function register(req ,res) {
         return createHash('sha256').update(toHash).digest('hex');
     }
 
-    //insert user into database
     try {
         await usersCollection.insertOne({
             name: req.body.name,
@@ -53,7 +54,6 @@ async function register(req ,res) {
         console.log("Registration failed");
         res.status(500).send();
     }
-    //await close()
 }
 
 module.exports = {register, login}

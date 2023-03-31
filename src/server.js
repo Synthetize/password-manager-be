@@ -3,7 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const {register, login} = require("./login-register");
-const {connect} = require("./db_connect-close");
+const {authenticateToken} = require("./middleware");
+const {connect, usersCollection} = require("./db_connect-close");
 
 
 
@@ -12,7 +13,7 @@ const {connect} = require("./db_connect-close");
 
 //app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-//app.use(express.json());
+
 app.use(cors({
     origin: 'http://localhost:8080',
 }));
@@ -21,6 +22,16 @@ con().then()
 async function con() {
     await connect();
 }
+
+
+
+//-----------------Middleware-----------------
+app.get('/testjwt', authenticateToken, async (req, res) => {
+    res.json(await usersCollection.findOne({"email": req.user.email}));
+});
+
+
+
 
 //-----------------Home-----------------
 app.get('/', (req, res) => {

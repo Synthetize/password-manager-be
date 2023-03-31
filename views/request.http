@@ -1,0 +1,27 @@
+POST /api/login HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+
+{"email":"1@1","password":"1234"}
+
+
+###
+POST /api/register HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+
+{"email":"1@1","password":"1234","name":"pierpaolo","surname":"cane"}
+
+
+
+### test jwt authetication token
+GET /testjwt HTTP/1.1
+host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMSIsIm5hbWUiOiJwaWVycGFvbG8iLCJzdXJuYW1lIjoiY2FuZSIsImlhdCI6MTY4MDI1ODExMCwiZXhwIjoxNjgwMjU4MTI1fQ.KKOZipPKIW8_psKxaAiJhmVDJtkeXKdM9Ptc2MfVHOk
+
+
+
+
+
+
+
