@@ -9,6 +9,7 @@ const {usersCollection} = require("./db_connect-close");
 
 
 async function login(req, res) {
+
     try {
         let email = req.body.email;
         let pass = req.body.password;
@@ -21,11 +22,11 @@ async function login(req, res) {
             res.status(200).json({accessToken: accessToken});
         } else {
             console.log("Credentials are wrong");
-            res.status(500).redirect('/login');
+            res.status(401);
         }
     } catch {
         console.log("Login failed");
-        res.status(500).redirect('/login');
+        res.status(400).send()
     }
 }
 
@@ -40,20 +41,34 @@ async function register(req ,res) {
         return createHash('sha256').update(toHash).digest('hex');
     }
 
-    try {
-        await usersCollection.insertOne({
-            name: req.body.name,
-            surname: req.body.surname,
-            email: req.body.email,
-            password: hashing(req.body.password, salt),
-            salt: salt
-        });
-        console.log("Registration successful");
-        res.status(201).send();
-    } catch {
-        console.log("Registration failed");
-        res.status(500).send();
-    }
+    await usersCollection.insertOne({
+                name: req.body.name,
+                surname: req.body.surname,
+                email: req.body.email,
+                password: hashing(req.body.password, salt),
+                salt: salt
+            }).then(() => {
+                console.log("Registration successful");
+                res.status(201).send();
+            }).catch(() => {
+                console.log("Registration failed");
+                res.status(500).send();
+    });
+
+    // try {
+    //     await usersCollection.insertOne({
+    //         name: req.body.name,
+    //         surname: req.body.surname,
+    //         email: req.body.email,
+    //         password: hashing(req.body.password, salt),
+    //         salt: salt
+    //     });
+    //     console.log("Registration successful");
+    //     res.status(201).send();
+    // } catch {
+    //     console.log("Registration failed");
+    //     res.status(500).send();
+    // }
 }
 
 module.exports = {register, login}
