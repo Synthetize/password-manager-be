@@ -4,7 +4,8 @@ const cors = require('cors');
 const app = express();
 const {register, login} = require("./login-register");
 const {authenticateToken} = require("./middleware");
-const {connect, usersCollection} = require("./db_connect-close");
+const {showUserVault, addToVault} = require("./vault");
+const {connect} = require("./db_connect-close");
 
 
 
@@ -15,6 +16,7 @@ const {connect, usersCollection} = require("./db_connect-close");
 app.use(express.json());
 
 app.use(cors({
+    credentials: true,
     origin: 'http://localhost:8080',
 }));
 app.set('view engine', 'ejs');
@@ -26,10 +28,10 @@ async function con() {
 
 
 //-----------------Middleware-----------------
-app.get('/testjwt', authenticateToken, async (req, res) => {
-    res.json(await usersCollection.findOne({"email": req.user.email}));
-});
-
+// app.get('/testjwt', authenticateToken, async (req, res) => {
+//     res.json(await usersCollection.findOne({"email": req.user.email}));
+// });
+//
 
 
 
@@ -54,6 +56,17 @@ app.get('/register', (req, res) => {
 app.post('/api/register', async (req, res) => {
     await register(req, res);
 });
+
+//-----------------Vault-----------------
+app.post('/api/vault', authenticateToken, async (req, res) => {
+    await showUserVault(req, res);
+});
+
+app.post('/api/addtovault', authenticateToken, async (req, res) => {
+    await addToVault(req, res);
+});
+
+
 //-----------------Port-----------------
 app.listen(3000, () => {
     console.log('Listening on port 3000');

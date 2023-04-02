@@ -17,12 +17,12 @@ async function login(req, res) {
         let hashingPass = createHash('sha256').update(pass.concat(userFromDB.salt)).digest('hex');
         if ( hashingPass === userFromDB.password) {
             //creating jwt token using email, name and surname as payload
-            const accessToken = jwt.sign({email: userFromDB.email, name: userFromDB.name, surname: userFromDB.surname}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15s'});
+            const accessToken = jwt.sign({email: userFromDB.email, name: userFromDB.name, surname: userFromDB.surname}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '5h'});
             console.log("Login successful");
             res.status(200).json({accessToken: accessToken});
         } else {
-            console.log("Credentials are wrong");
-            res.status(401);
+            console.log("Credentials not valid");
+            res.status(401).send();
         }
     } catch {
         console.log("Login failed");
@@ -33,9 +33,7 @@ async function login(req, res) {
 
 
 async function register(req ,res) {
-    //await connect();
     let salt = randomBytes(15).toString('hex');
-
     function hashing(password, salt) {
         const toHash = password.concat(salt)
         return createHash('sha256').update(toHash).digest('hex');

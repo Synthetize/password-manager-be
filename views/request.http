@@ -13,12 +13,29 @@ Content-Type: application/json
 {"email":"1@1","password":"1234","name":"pierpaolo","surname":"cane"}
 
 
-
 ### test jwt authetication token
 GET /testjwt HTTP/1.1
 host: localhost:3000
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMSIsIm5hbWUiOiJwaWVycGFvbG8iLCJzdXJuYW1lIjoiY2FuZSIsImlhdCI6MTY4MDI1ODExMCwiZXhwIjoxNjgwMjU4MTI1fQ.KKOZipPKIW8_psKxaAiJhmVDJtkeXKdM9Ptc2MfVHOk
 
+
+
+
+
+#############################VAULT TESTS
+### test showuservault
+POST /api/vault HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMSIsIm5hbWUiOiJwaWVycGFvbG8iLCJzdXJuYW1lIjoiY2FuZSIsImlhdCI6MTY4MDQzMTM0NiwiZXhwIjoxNjgwNDMyMjQ2fQ.1hcUUjl_Uboi8KbgfG519Jcr6jVyiYNTuhMrNUHM08A
+Content-Type: application/json
+
+### test ADD TO VAULT
+POST /api/addtovault HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMSIsIm5hbWUiOiJwaWVycGFvbG8iLCJzdXJuYW1lIjoiY2FuZSIsImlhdCI6MTY4MDQzMjAyNywiZXhwIjoxNjgwNDUwMDI3fQ.8vuOIkdyz1lh9WeJ6BTTJj4r0ddhxjz7PWu_ycDhAhg
+Content-Type: application/json
+
+{"name": "nomeacaso","email":"emaildelsito@sito","password":"cane","site_link":"sitodelcane", "notes":"note a caso"}
 
 
 
