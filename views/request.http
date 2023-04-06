@@ -1,41 +1,39 @@
+
+###login
 POST /api/login HTTP/1.1
 Host: localhost:3000
 Content-Type: application/json
 
-{"email":"1@1","password":"1234"}
+{"email":"e@email","password":"1234"}
 
 
-###
+###REGISTRATION
 POST /api/register HTTP/1.1
 Host: localhost:3000
 Content-Type: application/json
 
-{"email":"1@1","password":"1234","name":"pierpaolo","surname":"cane"}
+{"email":"e@email","password":"1234","name":"name","surname":"surname"}
 
 
-### test jwt authetication token
-GET /testjwt HTTP/1.1
-host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMSIsIm5hbWUiOiJwaWVycGFvbG8iLCJzdXJuYW1lIjoiY2FuZSIsImlhdCI6MTY4MDI1ODExMCwiZXhwIjoxNjgwMjU4MTI1fQ.KKOZipPKIW8_psKxaAiJhmVDJtkeXKdM9Ptc2MfVHOk
+###SHOW USER VAULT
+GET /api/vault HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgwNzg2MjQxLCJleHAiOjE2ODA4MDQyNDF9.9iRfHZKQo1HZWJI9fwr12BEiHBTG3yRpH2Me8X-Go8g
 
 
-
-
-
-#############################VAULT TESTS
-### test showuservault
+###ADD TO VAULT
 POST /api/vault HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMSIsIm5hbWUiOiJwaWVycGFvbG8iLCJzdXJuYW1lIjoiY2FuZSIsImlhdCI6MTY4MDQzMTM0NiwiZXhwIjoxNjgwNDMyMjQ2fQ.1hcUUjl_Uboi8KbgfG519Jcr6jVyiYNTuhMrNUHM08A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgwNzg2MjQxLCJleHAiOjE2ODA4MDQyNDF9.9iRfHZKQo1HZWJI9fwr12BEiHBTG3yRpH2Me8X-Go8g
 Content-Type: application/json
 
-### test ADD TO VAULT
-POST /api/addtovault HTTP/1.1
+{"name": "nomeacaso","email":"emaildelsito@sito","password":"passsito","link":"sitodelcane", "notes":"note a caso"}
+
+
+###REMOVE FROM VAULT
+DELETE /api/vault/606eba699ef7ddf325fb HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjFAMSIsIm5hbWUiOiJwaWVycGFvbG8iLCJzdXJuYW1lIjoiY2FuZSIsImlhdCI6MTY4MDQzMjAyNywiZXhwIjoxNjgwNDUwMDI3fQ.8vuOIkdyz1lh9WeJ6BTTJj4r0ddhxjz7PWu_ycDhAhg
-Content-Type: application/json
-
-{"name": "nomeacaso","email":"emaildelsito@sito","password":"cane","site_link":"sitodelcane", "notes":"note a caso"}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgwNzg2MjQxLCJleHAiOjE2ODA4MDQyNDF9.9iRfHZKQo1HZWJI9fwr12BEiHBTG3yRpH2Me8X-Go8g
 
 
 
