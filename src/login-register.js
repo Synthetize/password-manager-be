@@ -4,10 +4,9 @@ const jwt = require("jsonwebtoken");
 const {usersCollection, userVaultCollection} = require("./db_connect-close");
 
 
-
+//todo: logout
 // todo: add api to change elements value in the vault
-// TODO: check if the email used for registration is already in the database
-// TODO: check the user input to avoid sql injection
+// TODO: check the user input to avoid  injection
 //
 // TODO: add hashing function to user vault
 // TODO: add jwt token refresh
@@ -26,11 +25,10 @@ async function login(req, res) {
             //creating jwt token using email, name and surname as payload
             const accessToken = jwt.sign({email: userFromDB.email, name: userFromDB.name, surname: userFromDB.surname}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '5h'});
             console.log("Login successful");
-            // res.status(200).json({
-            //     accessToken: accessToken,
-            //     email: userFromDB.email,
-            // });
-            res.status(200).cookie("auth", accessToken, {httpOnly: true}).send();
+            res.status(200).json({
+                accessToken: accessToken,
+                email: userFromDB.email,
+            });
         } else {
             console.log("Credentials not valid");
             res.status(401).send();
@@ -43,26 +41,33 @@ async function login(req, res) {
 
 
 
-async function register(req ,res) {
+async function register(req, res) {
     let salt = randomBytes(15).toString('hex');
+
     function hashing(password, salt) {
         const toHash = password.concat(salt)
         return createHash('sha256').update(toHash).digest('hex');
     }
 
-    await usersCollection.insertOne({
-                name: req.body.name,
-                surname: req.body.surname,
-                email: req.body.email,
-                password: hashing(req.body.password, salt),
-                salt: salt
-            }).then(async () => {
+    if (await usersCollection.findOne({"email": req.body.email}) !== null) {
+        console.log("Email is already in use");
+        res.status(400).send();
+        return;
+    }
 
-                console.log("Registration successful");
-                res.status(201).send();
-            }).catch(() => {
-                console.log("Registration failed");
-                res.status(500).send();
+
+    usersCollection.insertOne({
+        name: req.body.name,
+        surname: req.body.surname,
+        email: req.body.email,
+        password: hashing(req.body.password, salt),
+        salt: salt
+    }).then(async () => {
+        console.log("Registration successful");
+        res.status(201).send();
+    }).catch(() => {
+        console.log("Registration failed");
+        res.status(500).send();
     });
 }
 

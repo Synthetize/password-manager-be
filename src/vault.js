@@ -26,7 +26,7 @@ async function addToVault(req, res) {
     }
 
     //insert the element in the vault
-    await userVaultCollection.insertOne({
+    userVaultCollection.insertOne({
         ...req.body,
         user_id: req.user.email,
         element_id: generated_id
