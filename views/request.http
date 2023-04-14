@@ -12,28 +12,41 @@ POST /api/register HTTP/1.1
 Host: localhost:3000
 Content-Type: application/json
 
-{"email":"e@emai1327765ytrfdkksfsy464565rg5gl","password":"1234","name":"name","surname":"surname"}
+{"email":"e@piero","password":"1234","name":"name","surname":"surname"}
 
 
 ###SHOW USER VAULT
 GET /api/vault HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgwODYwMjExLCJleHAiOjE2ODA4NzgyMTF9.q0ZApnSRWyB9hoz93mf2zMmg3w13VL5updV5JHQsF0M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgxNDYxNjA3LCJleHAiOjE2ODE0Nzk2MDd9.4I_0P0FJI6yfR_J8H2lIkloYZ5BAwDuVNtaKhzL4LP0
 
 
 ###ADD TO VAULT
 POST /api/vault HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgwNzg2MjQxLCJleHAiOjE2ODA4MDQyNDF9.9iRfHZKQo1HZWJI9fwr12BEiHBTG3yRpH2Me8X-Go8g
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgxNDYxNjA3LCJleHAiOjE2ODE0Nzk2MDd9.4I_0P0FJI6yfR_J8H2lIkloYZ5BAwDuVNtaKhzL4LP0
 Content-Type: application/json
 
-{"name": "nomeacaso","email":"emaildelsito@sito","password":"passsito","link":"sitodelcane", "notes":"note a caso"}
+{"name": "nome4","email":"emaildelsito@sito","password":"pass4","link":"sito", "notes":"note sito 4"}
 
 
 ###REMOVE FROM VAULT
-DELETE /api/vault/606eba699ef7ddf325fb HTTP/1.1
+DELETE /api/vault HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgwNzg2MjQxLCJleHAiOjE2ODA4MDQyNDF9.9iRfHZKQo1HZWJI9fwr12BEiHBTG3yRpH2Me8X-Go8g
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgxNDYxNjA3LCJleHAiOjE2ODE0Nzk2MDd9.4I_0P0FJI6yfR_J8H2lIkloYZ5BAwDuVNtaKhzL4LP0
+Content-Type: application/json
+
+{"elements":["64393eece3e84050c7cf4c47","642eca85f216cdc5e13ba89b"]}
+
+###UPDATE ELEMENT
+PUT /api/vault/64393eece3e84050c7cf4c47 HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgxNDYxNjA3LCJleHAiOjE2ODE0Nzk2MDd9.4I_0P0FJI6yfR_J8H2lIkloYZ5BAwDuVNtaKhzL4LP0
+Content-Type: application/json
+
+{"name": "newname", "notes":"note e nome modificate"}
+###basta inviare solo le sezioni da cambiare e non l'intera struttura dell'elemento
+
 
 
 

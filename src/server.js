@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 const {register, login} = require("./login-register");
 const {authenticateToken} = require("./middleware");
-const {showUserVault, addToVault, removeFromVault} = require("./vault");
+const {showUserVault, addToVault, removeFromVault, updateElement} = require("./vault");
 const {connect} = require("./db_connect-close");
 
 
@@ -35,18 +35,11 @@ async function con() {
 //     res.redirect('/login');
 // });
 
-//-----------------Login-----------------
-// app.get('/login', (req, res) => {
-//     res.render('login.ejs');
-// });
+//-----------------User Auth-----------------;
 
 app.post('/api/login', async (req, res) => {
     await login(req, res);
 });
-//-----------------Register-----------------
-// app.get('/register', (req, res) => {
-//     res.render('register.ejs');
-// });
 
 app.post('/api/register', async (req, res) => {
     await register(req, res);
@@ -61,19 +54,15 @@ app.post('/api/vault', authenticateToken, async (req, res) => {
     await addToVault(req, res);
 });
 
-app.delete('/api/vault/:element_id', authenticateToken, async (req, res) => {
-    await removeFromVault(req, res, req.params.element_id);
+
+app.delete('/api/vault', authenticateToken, async (req, res) => {
+    await removeFromVault(req, res);
 });
 
+app.put('/api/vault/:element_id', authenticateToken, async (req, res) => {
+    await updateElement(req, res);
+});
 
-function validateEmail(input) {
-    let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (input.match(validRegex)) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 
 //-----------------Port-----------------

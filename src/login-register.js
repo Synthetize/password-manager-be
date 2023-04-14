@@ -4,8 +4,6 @@ const jwt = require("jsonwebtoken");
 const {usersCollection, userVaultCollection} = require("./db_connect-close");
 
 
-//todo: logout
-// todo: add api to change elements value in the vault
 // TODO: check the user input to avoid  injection
 //
 // TODO: add hashing function to user vault
