@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const {register, login} = require("./login-register");
+const {register, login} = require("./user");
 const {authenticateToken} = require("./middleware");
 const {showUserVault, addToVault, removeFromVault, updateElement} = require("./vault");
 const {connect} = require("./db_connect-close");
@@ -14,7 +14,12 @@ app.use(express.json());
 app.use(cors({
     credentials: true,
     origin: 'http://localhost:8080',
+    // //allow all headers
+    // allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Headers', 'Access-Control-Allow-Methods', 'Access-Control-Allow-Credentials', 'Access-Control-Max-Age', 'Access-Control-Request-Headers', 'Access-Control-Request-Method'],
+    // //allow all methods
+    // methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD'],
 }));
+app.options('*', cors());
 app.set('view engine', 'ejs');
 con().then()
 
@@ -59,7 +64,7 @@ app.delete('/api/vault', authenticateToken, async (req, res) => {
     await removeFromVault(req, res);
 });
 
-app.put('/api/vault/:element_id', authenticateToken, async (req, res) => {
+app.put('/api/vault/:element', authenticateToken, async (req, res) => {
     await updateElement(req, res);
 });
 

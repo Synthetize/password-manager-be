@@ -26,6 +26,8 @@ async function login(req, res) {
             res.status(200).json({
                 accessToken: accessToken,
                 email: userFromDB.email,
+                name: userFromDB.name,
+                surname: userFromDB.surname
             });
         } else {
             console.log("Credentials not valid");
@@ -66,6 +68,21 @@ async function register(req, res) {
     }).catch(() => {
         console.log("Registration failed");
         res.status(500).send();
+    });
+}
+
+
+function getUserDetails(req, res) {
+    usersCollection.findOne({"email": name.user.email}).then(user => {
+        res.status(200).json({
+            name: user.name,
+            surname: user.surname,
+            email: user.email,
+
+        }).catch(e => {
+            console.log(e);
+            res.status(500).send();
+        });
     });
 }
 
