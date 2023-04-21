@@ -53,7 +53,7 @@ function updateElement(req, res) {
 
 
 function removeKey(req, res, key) {
-    userVaultCollection.updateOne({"user_id": req.user.email, "_id": new ObjectId(req.params.element)}, {$pull: {[key]: {$in: req.body.list}}}).then(() => {
+    userVaultCollection.updateOne({"user_id": req.user.email}, {$pull: {[key]: {$in: req.body.list}}}).then(() => {
         console.log("removed");
         res.status(200).send();
     }).catch(e => {

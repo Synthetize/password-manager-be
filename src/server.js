@@ -72,10 +72,10 @@ app.put('/api/vault/:element', authenticateToken, async (req, res) => {
 
 
 
-app.post('/api/vault/:element/tags', authenticateToken, async (req, res) => {
+app.delete('/api/vault/tags', authenticateToken, async (req, res) => {
     await removeKey(req, res, "tag");
 });
-app.post('/api/vault/:element/types', authenticateToken, async (req, res) => {
+app.delete('/api/vault/types', authenticateToken, async (req, res) => {
     await removeKey(req, res, "type");
 });
 
