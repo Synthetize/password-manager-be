@@ -86,4 +86,4 @@ function getUserDetails(req, res) {
     });
 }
 
-module.exports = {register, login}
+module.exports = {register, login, getUserDetails}

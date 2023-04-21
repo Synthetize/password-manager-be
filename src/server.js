@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const {register, login} = require("./user");
+const {register, login, getUserDetails} = require("./user");
 const {authenticateToken} = require("./middleware");
-const {showUserVault, addToVault, removeFromVault, updateElement} = require("./vault");
+const {showUserVault, addToVault, removeFromVault, updateElement, removeKey} = require("./vault");
 const {connect} = require("./db_connect-close");
 
 
@@ -49,7 +49,9 @@ app.post('/api/login', async (req, res) => {
 app.post('/api/register', async (req, res) => {
     await register(req, res);
 });
-
+app.get('/api/user/:userid', authenticateToken, async (req, res) => {
+    await getUserDetails(req, res);
+});
 //-----------------Vault-----------------
 app.get('/api/vault', authenticateToken, async (req, res) => {
     await showUserVault(req, res);
@@ -66,6 +68,15 @@ app.delete('/api/vault', authenticateToken, async (req, res) => {
 
 app.put('/api/vault/:element', authenticateToken, async (req, res) => {
     await updateElement(req, res);
+});
+
+
+
+app.post('/api/vault/:element/tags', authenticateToken, async (req, res) => {
+    await removeKey(req, res, "tag");
+});
+app.post('/api/vault/:element/types', authenticateToken, async (req, res) => {
+    await removeKey(req, res, "type");
 });
 
 
