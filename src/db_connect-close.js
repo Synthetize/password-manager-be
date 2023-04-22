@@ -8,7 +8,7 @@ const connection = new MongoClient(uri, {
 });
 const usersCollection = connection.db('password-manager').collection('users');
 const  userVaultCollection = connection.db('password-manager').collection('user_vault');
-
+const userFoldersCollection = connection.db('password-manager').collection('user_folders');
 async function connect() {
     try {
         await connection.connect();
@@ -27,4 +27,4 @@ async function close() {
     }
 }
 
-module.exports = { connect, close, usersCollection, userVaultCollection };
+module.exports = { connect, close, usersCollection, userVaultCollection, userFoldersCollection };

@@ -1,0 +1,24 @@
+
+###login
+POST /api/login HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+
+{"email":"e@email","password":"1234"}
+
+
+###REGISTRATION
+POST /api/register HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+
+{"email":"e@pippo","password":"1234","name":"name","surname":"surname"}
+
+
+
+
+
+
+
+
+

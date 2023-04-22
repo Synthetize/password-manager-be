@@ -1,20 +1,4 @@
 
-###login
-POST /api/login HTTP/1.1
-Host: localhost:3000
-Content-Type: application/json
-
-{"email":"e@email","password":"1234"}
-
-
-###REGISTRATION
-POST /api/register HTTP/1.1
-Host: localhost:3000
-Content-Type: application/json
-
-{"email":"e@piero","password":"1234","name":"name","surname":"surname"}
-
-
 ###SHOW USER VAULT
 GET /api/vault HTTP/1.1
 Host: localhost:3000
@@ -51,25 +35,3 @@ Content-Type: application/json
   "password": "pass23",
   "site": "sito2s",
 }
-
-###REMOVE TAGS
-POST /api/vault/643ea24e8c6c851bb27affd9/tags HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgyMDg1ODU1LCJleHAiOjE2ODIxMDM4NTV9.4TgTgoiM90RugOh7tZ8jA7Y2FTw7uoFmPaEcYnCFLgI
-Content-Type: application/json
-
-{"list":["folder2"]}
-
-###REMOVE TYPES
-POST /api/vault/643ea24e8c6c851bb27affd9/types HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgyMDg1ODU1LCJleHAiOjE2ODIxMDM4NTV9.4TgTgoiM90RugOh7tZ8jA7Y2FTw7uoFmPaEcYnCFLgI
-Content-Type: application/json
-
-{"list":["Favorite","Accounts"]}
-
-
-
-
-
-

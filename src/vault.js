@@ -52,18 +52,4 @@ function updateElement(req, res) {
 }
 
 
-function removeKey(req, res, key) {
-    userVaultCollection.updateOne({"user_id": req.user.email}, {$pull: {[key]: {$in: req.body.list}}}).then(() => {
-        console.log("removed");
-        res.status(200).send();
-    }).catch(e => {
-        console.log("Element not found");
-        res.status(404).send();
-    });
-
-
-
-}
-
-
-module.exports = {showUserVault, addToVault, removeFromVault, updateElement, removeKey};
+module.exports = {showUserVault, addToVault, removeFromVault, updateElement, };

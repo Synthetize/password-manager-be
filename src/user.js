@@ -1,7 +1,7 @@
 const {randomBytes} = require("node:crypto");
 const {createHash} = require("crypto");
 const jwt = require("jsonwebtoken");
-const {usersCollection, userVaultCollection} = require("./db_connect-close");
+const {usersCollection, userVaultCollection, userFoldersCollection} = require("./db_connect-close");
 
 
 // TODO: check the user input to avoid  injection
@@ -62,7 +62,8 @@ async function register(req, res) {
         email: req.body.email,
         password: hashing(req.body.password, salt),
         salt: salt
-    }).then(async () => {
+    }).then(() => {
+        userFoldersCollection.insertOne({user_id: req.body.email});
         console.log("Registration successful");
         res.status(201).send();
     }).catch(() => {

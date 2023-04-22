@@ -3,7 +3,8 @@ const cors = require('cors');
 const app = express();
 const {register, login, getUserDetails} = require("./user");
 const {authenticateToken} = require("./middleware");
-const {showUserVault, addToVault, removeFromVault, updateElement, removeKey} = require("./vault");
+const {showFolders, addFolder, removeFolder} = require("./folders");
+const {showUserVault, addToVault, removeFromVault, updateElement} = require("./vault");
 const {connect} = require("./db_connect-close");
 
 
@@ -52,6 +53,8 @@ app.post('/api/register', async (req, res) => {
 app.get('/api/user/:userid', authenticateToken, async (req, res) => {
     await getUserDetails(req, res);
 });
+
+
 //-----------------Vault-----------------
 app.get('/api/vault', authenticateToken, async (req, res) => {
     await showUserVault(req, res);
@@ -70,13 +73,17 @@ app.put('/api/vault/:element', authenticateToken, async (req, res) => {
     await updateElement(req, res);
 });
 
-
-
-app.delete('/api/vault/tags', authenticateToken, async (req, res) => {
-    await removeKey(req, res, "tag");
+//-----------------Folders-----------------
+app.get('/api/folders', authenticateToken, async (req, res) => {
+    await showFolders(req, res);
 });
-app.delete('/api/vault/types', authenticateToken, async (req, res) => {
-    await removeKey(req, res, "type");
+
+app.post('/api/folders', authenticateToken,(req, res) => {
+    addFolder(req, res);
+});
+
+app.delete('/api/folders/:list', authenticateToken, async (req, res) => {
+    await removeFolder(req, res);
 });
 
 
