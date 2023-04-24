@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 const {register, login, getUserDetails} = require("./user");
 const {authenticateToken} = require("./middleware");
-const {showFolders, addFolder, removeFolder} = require("./folders");
+const {showFolders, addFolder, removeFolder, addElementToFolder, removeElementFromFolder, changeFolderName} = require("./folders");
 const {showUserVault, addToVault, removeFromVault, updateElement} = require("./vault");
 const {connect} = require("./db_connect-close");
 
@@ -85,6 +85,18 @@ app.post('/api/folders', authenticateToken,(req, res) => {
 app.delete('/api/folders/:list', authenticateToken, async (req, res) => {
     await removeFolder(req, res);
 });
+
+app.post('/api/folders/change', authenticateToken, async (req, res) => {
+    await changeFolderName(req, res);
+});
+
+app.post('/api/folders/element', authenticateToken, async (req, res) => {
+    await addElementToFolder(req, res);
+});
+
+app.delete('/api/folders/element/:params', authenticateToken, async (req, res) => {
+    await removeElementFromFolder(req, res);
+})
 
 
 

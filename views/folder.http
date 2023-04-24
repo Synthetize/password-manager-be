@@ -1,18 +1,41 @@
 ###SHOW FOLDER
 GET /api/folders HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgyMTU0NzA2LCJleHAiOjE2ODIxNzI3MDZ9.v4Pi1PaIPPSSbaCjeIgikOtdGIh1ZSAHo4JSheUuJ80
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgyMTgzMzU0LCJleHAiOjE2ODIyMDEzNTR9.Y91rf_K0idXNXyfvVE53gIJ7xtLl7dK9NZV0RxGnFEc
 
 ###ADD FOLDER
 POST /api/folders HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgyMTczNTIxLCJleHAiOjE2ODIxOTE1MjF9.PGZPqmR2_UDqa8UcXh7QM8-FvBH13YQt9VR5s57diUc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgyMzMwMTE3LCJleHAiOjE2ODIzNDgxMTd9.WAsnCFhlJ64YJRCWRrSnpn52BPER7a9UCT1GOjnwumg
 Content-Type: application/json
 
-{"folder1": [],"folder2": []}
+{"folder3": [],"folder4": []}
 
 ###REMOVE FOLDER
 DELETE /api/folders/folder1&folder2 HTTP/1.1
 Host: localhost:3000
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgyMTczNTIxLCJleHAiOjE2ODIxOTE1MjF9.PGZPqmR2_UDqa8UcXh7QM8-FvBH13YQt9VR5s57diUc
+
+
+###CHANGE FOLDER NAME
+POST /api/folders/change HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgyMzMwMTE3LCJleHAiOjE2ODIzNDgxMTd9.WAsnCFhlJ64YJRCWRrSnpn52BPER7a9UCT1GOjnwumg
+Content-Type: application/json
+
+{"oldName": "folder1452", "newName": "folder1"}
+
+###ADD ELEMENT TO FOLDER
+POST /api/folders/element HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgyMzMwMTE3LCJleHAiOjE2ODIzNDgxMTd9.WAsnCFhlJ64YJRCWRrSnpn52BPER7a9UCT1GOjnwumg
+Content-Type: application/json
+
+{"folder": "folder1452", "element": "elementID2"}
+
+
+###REMOVE ELEMENT FROM FOLDER
+DELETE /api/folders/element/folder1&elementID2 HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgyMzMwMTE3LCJleHAiOjE2ODIzNDgxMTd9.WAsnCFhlJ64YJRCWRrSnpn52BPER7a9UCT1GOjnwumg
 

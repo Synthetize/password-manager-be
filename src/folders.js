@@ -4,7 +4,9 @@ const {contentDisposition} = require("express/lib/utils");
 const {ConnectionStates} = require("mongoose");
 
 function showFolders(req, res) {
-    userFoldersCollection.find({"user_id": req.user.email}).toArray().then(folders => {
+    userFoldersCollection.findOne({"user_id": req.user.email}).then(folders => {
+        delete folders[0].user_id;
+        delete folders[0]._id;
         res.status(200).json({folders: folders});
     }).catch(e => {
         console.log(e);
@@ -24,7 +26,7 @@ function addFolder(req, res) {
 }
 
 function removeFolder(req, res) {
-    const toBeDelete = req.params.list.split("&");
+    let toBeDelete = req.params.list.split("&");
     let toBeDeleteObj = Object.fromEntries(toBeDelete.map(element => [element, ""]));
     userFoldersCollection.updateOne({"user_id": req.user.email}, {$unset: toBeDeleteObj}).then(() => {
         console.log("Folder removed");
@@ -35,7 +37,39 @@ function removeFolder(req, res) {
     });
 }
 
-module.exports = {showFolders, addFolder, removeFolder};
+function changeFolderName(req, res) {
+    userFoldersCollection.updateOne({"user_id": req.user.email}, {$rename: {[req.body.oldName]: req.body.newName}}).then(() => {
+        console.log("Folder name changed");
+        res.status(200).send();
+    }).catch(e => {
+        console.log(e);
+        res.status(404).send();
+    });
+}
+
+function addElementToFolder(req, res) {
+    userFoldersCollection.updateOne({"user_id": req.user.email}, {$push: {[req.body.folder]: req.body.element}}).then(() => {
+        console.log("Element added to folder");
+        res.status(200).send();
+    }).catch(e => {
+        console.log(e);
+        res.status(404).send();
+    });
+}
+
+function removeElementFromFolder(req, res) {
+    let toBeDelete = req.params.params.split("&");
+    let folderName = toBeDelete[0];
+    let elementID = toBeDelete[1];
+    userFoldersCollection.updateOne({"user_id": req.user.email}, {$pull: {[folderName]: elementID}}).then(() => {
+        console.log("Element removed from folder");
+        res.status(200).send();
+    }).catch(e => {
+        console.log(e);
+        res.status(404).send();
+    });
+}
+module.exports = {showFolders, addFolder, removeFolder, changeFolderName, addElementToFolder, removeElementFromFolder, };
 
 
 
