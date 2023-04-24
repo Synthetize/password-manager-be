@@ -6,11 +6,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1ha
 ###ADD FOLDER
 POST /api/folders HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgyMzMwMTE3LCJleHAiOjE2ODIzNDgxMTd9.WAsnCFhlJ64YJRCWRrSnpn52BPER7a9UCT1GOjnwumg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgyMzM3ODczLCJleHAiOjE2ODIzNTU4NzN9.fct299WEUpl2BhK2_auu0bV6qCOb8iTAapNXcHKr5LI
 Content-Type: application/json
 
-{"folder3": [],"folder4": []}
-
+{"newfolder": "newf233k=--0;"}
 ###REMOVE FOLDER
 DELETE /api/folders/folder1&folder2 HTTP/1.1
 Host: localhost:3000

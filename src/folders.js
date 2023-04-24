@@ -5,8 +5,8 @@ const {ConnectionStates} = require("mongoose");
 
 function showFolders(req, res) {
     userFoldersCollection.findOne({"user_id": req.user.email}).then(folders => {
-        delete folders[0].user_id;
-        delete folders[0]._id;
+        delete folders.user_id;
+        delete folders._id;
         res.status(200).json({folders: folders});
     }).catch(e => {
         console.log(e);
@@ -16,7 +16,7 @@ function showFolders(req, res) {
 }
 
 function addFolder(req, res) {
-    userFoldersCollection.updateOne({"user_id": req.user.email}, {$set: {...req.body}}).then(() => {
+    userFoldersCollection.updateOne({"user_id": req.user.email}, {$set: {[req.body.newfolder]:[]}}).then(() => {
         console.log("Folder added");
         res.status(200).send();
     }).catch(e => {
