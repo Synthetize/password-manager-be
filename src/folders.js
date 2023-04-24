@@ -25,6 +25,7 @@ function addFolder(req, res) {
     });
 }
 
+
 function removeFolder(req, res) {
     let toBeDelete = req.params.list.split("&");
     let toBeDeleteObj = Object.fromEntries(toBeDelete.map(element => [element, ""]));

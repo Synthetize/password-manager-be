@@ -10,6 +10,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1ha
 Content-Type: application/json
 
 {"newfolder": "newf233k=--0;"}
+
 ###REMOVE FOLDER
 DELETE /api/folders/folder1&folder2 HTTP/1.1
 Host: localhost:3000
