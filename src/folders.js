@@ -49,7 +49,7 @@ function changeFolderName(req, res) {
 }
 
 function addElementToFolder(req, res) {
-    userFoldersCollection.updateOne({"user_id": req.user.email}, {$push: {[req.body.folder]: req.body.element}}).then(() => {
+    userFoldersCollection.updateOne({"user_id": req.user.email}, {$addToSet: {[req.body.folder]: {$each: req.body.element}}}).then(() => {
         console.log("Element added to folder");
         res.status(200).send();
     }).catch(e => {

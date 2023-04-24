@@ -28,10 +28,10 @@ Content-Type: application/json
 ###ADD ELEMENT TO FOLDER
 POST /api/folders/element HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgyMzMwMTE3LCJleHAiOjE2ODIzNDgxMTd9.WAsnCFhlJ64YJRCWRrSnpn52BPER7a9UCT1GOjnwumg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgyMzQ3NTQxLCJleHAiOjE2ODIzNjU1NDF9.04KxDe89dTR9ume8DNBeJgVkb8aJg9JqJlF2-Ll6zE8
 Content-Type: application/json
 
-{"folder": "folder1452", "element": "elementID2"}
+{"folder": "gg", "element": ["elementID", "elementID2"]}
 
 
 ###REMOVE ELEMENT FROM FOLDER
