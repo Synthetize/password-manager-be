@@ -68,11 +68,50 @@ export async function register(req, res) {
 
 
 export function getUserDetails(req, res) {
-    usersCollection.findOne({"email": name.user.email}).then(user => {
+    usersCollection.findOne({"email": req.user.email}).then(user => {
         delete user.salt;
         res.status(200).json({user});
     }).catch(e => {
         console.log(e);
         res.status(500).send();
+    });
+}
+
+
+export function changeUserDetails(req, res) {
+    usersCollection.updateOne({"email": req.user.email}, {$set: {[req.body.field]:req.body.value}}).then(() => {
+        console.log("Password changed");
+        res.status(200).send();
+    }).catch(e => {
+        console.log(e);
+        res.status(500).send();
+    });
+}
+
+export function changeUserPassword(req, res) {
+    let salt = randomBytes(15).toString('hex');
+
+    function hashing(password, salt) {
+        const toHash = password.concat(salt)
+        return createHash('sha256').update(toHash).digest('hex');
+    }
+
+    usersCollection.findOne({"email": req.user.email}).then(userFromDB => {
+        let oldPassHashing = hashing(req.body.oldpassword, userFromDB.salt);
+        let newPassHashing = hashing(req.body.newpassword, salt);
+        try {
+            usersCollection.updateOne({
+                "email": req.user.email,
+                "password": oldPassHashing
+            }, {$set: {"password": newPassHashing, "salt": salt}})
+            res.status(200).send();
+        } catch (e){
+            console.log(e);
+            res.status(500).send();
+        }
+    }).catch(e => {
+        console.log("Password change failed");
+        console.log(e);
+        res.status(500).send()
     });
 }

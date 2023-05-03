@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import {register, login, getUserDetails} from "./user.js";
+import {register, login, getUserDetails, changeUserDetails, changeUserPassword} from "./user.js";
 import {authenticateToken} from "./middleware.js";
 import {showFolders, addFolder, removeFolder, addElementToFolder, removeElementFromFolder, changeFolderName} from "./user_folders.js";
 import {showUserVault, addToVault, removeFromVault, updateElement} from "./user_vault.js";
@@ -66,8 +66,18 @@ app.post('/api/login', async (req, res) => {
 app.post('/api/register', async (req, res) => {
     await register(req, res);
 });
+
+
+//-----------------User Details-----------------
 app.get('/api/user/:userid', authenticateToken, async (req, res) => {
     await getUserDetails(req, res);
+});
+app.post('/api/user/details', authenticateToken, async (req, res) => {
+    await changeUserDetails(req, res);
+});
+
+app.post('/api/user/password', authenticateToken, async (req, res) => {
+    await changeUserPassword(req, res);
 });
 
 
