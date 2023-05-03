@@ -99,6 +99,10 @@ export function changeUserPassword(req, res) {
     usersCollection.findOne({"email": req.user.email}).then(userFromDB => {
         let oldPassHashing = hashing(req.body.oldpassword, userFromDB.salt);
         let newPassHashing = hashing(req.body.newpassword, salt);
+        if (oldPassHashing !== userFromDB.password) {
+            console.log("Old password is not correct");
+            res.status(401).send();
+        }
         try {
             usersCollection.updateOne({
                 "email": req.user.email,
