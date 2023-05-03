@@ -2,36 +2,30 @@
 ###SHOW USER VAULT
 GET /api/vault HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgxNDYxNjA3LCJleHAiOjE2ODE0Nzk2MDd9.4I_0P0FJI6yfR_J8H2lIkloYZ5BAwDuVNtaKhzL4LP0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgzMTA4MzE1LCJleHAiOjE2ODMxMjYzMTV9.LdVhEE7AVNP5tlmCnCQZQAbKR1dKsiGctLXOpPXuQNQ
 
 
 ###ADD TO VAULT
 POST /api/vault HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgxNDYxNjA3LCJleHAiOjE2ODE0Nzk2MDd9.4I_0P0FJI6yfR_J8H2lIkloYZ5BAwDuVNtaKhzL4LP0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgzMTA4NDIxLCJleHAiOjE2ODMxMjY0MjF9.6kNpxvnJ2YNo5NJul8Bd3YF6x9x6ImkAef3tcGmSqB8
 Content-Type: application/json
 
-{"name": "nome4","email":"emaildelsito@sito","password":"pass4","link":"sito", "notes":"note sito 4"}
+{"name": "noRWEFDSo","email":"email@sito","password":"pass4","link":"sito", "notes":"note sito 4"}
 
 
 ###REMOVE FROM VAULT
 DELETE /api/vault HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgxNDg4MDk5LCJleHAiOjE2ODE1MDYwOTl9.Uo3csTKK09Cawd-RYexmPUd9U1dRm4WRdePxohxrydg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgzMTA4MzE1LCJleHAiOjE2ODMxMjYzMTV9.LdVhEE7AVNP5tlmCnCQZQAbKR1dKsiGctLXOpPXuQNQ
 Content-Type: application/json
 
-{"elements":["64396b93fb0ccafcb82805e3"]}
+{"elements":["64523259b9a51a40a19ee265", "64517c8d4162cf75dd873d68"]}
 
 ###UPDATE ELEMENT
-PUT /api/vault HTTP/1.1
+PUT /api/vault/64517c8d4162cf75dd873d67 HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgxNDg5ODgwLCJleHAiOjE2ODE1MDc4ODB9.mvriDoM2nqJohazFaTRzw-Cm2Oww6ct1WaKPfnK6qbI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgzMTA4MzE1LCJleHAiOjE2ODMxMjYzMTV9.LdVhEE7AVNP5tlmCnCQZQAbKR1dKsiGctLXOpPXuQNQ
 Content-Type: application/json
 
-
-{
-  "name": "new",
-  "email": "emaildelsito@sito",
-  "password": "pass23",
-  "site": "sito2s",
-}
+{"name": "new","email":"new","password":"new","link":"new", "notes":"new","tags":["Accounts"]}

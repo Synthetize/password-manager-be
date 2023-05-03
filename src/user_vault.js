@@ -1,10 +1,18 @@
-const {userVaultCollection} = require("./db_connect-close");
-const {randomBytes} = require("node:crypto");
-const {ObjectId} = require("mongodb");
+import {userVaultCollection} from "./database_manager.js";
+import {ObjectId} from "mongodb";
+import {decryptData, encryptData} from "./encryption.js";
 
 
-function showUserVault(req, res) {
+export function showUserVault(req, res) {
     userVaultCollection.find({"user_id": req.user.email}).toArray().then(vault => {
+        vault = vault.map(element => {
+            let data = {
+                "_id": element._id,
+                ...JSON.parse(decryptData(element.encryptedBody)),
+                "user_id": element.user_id,
+            }
+            return data
+        })
         res.status(200).json({vault: vault});
     }).catch(e => {
         console.log(e);
@@ -14,10 +22,11 @@ function showUserVault(req, res) {
 }
 
 
-async function addToVault(req, res) {
+export async function addToVault(req, res) {
     //insert the element in the vault
+    let encryptedBody = encryptData(JSON.stringify(req.body));
     userVaultCollection.insertOne({
-        ...req.body,
+        encryptedBody,
         user_id: req.user.email,
     }).then(()=> {
         console.log("Element added to vault");
@@ -30,7 +39,7 @@ async function addToVault(req, res) {
 }
 
 
-function removeFromVault(req, res) {
+export function removeFromVault(req, res) {
     let objsArray = req.body.elements.map(element => new ObjectId(element));
     userVaultCollection.deleteMany({"user_id": req.user.email, "_id": {$in: objsArray} }).then(() => {
         console.log("Elements removed from vault");
@@ -41,15 +50,15 @@ function removeFromVault(req, res) {
     });
 }
 
-function updateElement(req, res) {
-    userVaultCollection.updateOne({"user_id": req.user.email, "_id": new ObjectId(req.params.element)}, {$set: {...req.body}}).then(() => {
+export function updateElement(req, res) {
+    let encryptedData = encryptData(JSON.stringify(req.body));
+    userVaultCollection.updateOne({"user_id": req.user.email, "_id": new ObjectId(req.params.element)}, {$set: {encryptedBody: encryptedData}}).then(() => {
         console.log("Element updated");
         res.status(200).send();
     }).catch(e => {
-        console.log("Element not found");
+        console.log("Error updating element");
+        console.log(e);
         res.status(404).send();
     });
 }
 
-
-module.exports = {showUserVault, addToVault, removeFromVault, updateElement, };

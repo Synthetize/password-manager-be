@@ -1,18 +1,12 @@
-const {randomBytes} = require("node:crypto");
-const {createHash} = require("crypto");
-const jwt = require("jsonwebtoken");
-const {usersCollection, userVaultCollection, userFoldersCollection} = require("./db_connect-close");
 
-
-// TODO: check the user input to avoid  injection
-//
-// TODO: add hashing function to user vault
-// TODO: add jwt token refresh
-// TODO: add possibility to change password
+import {randomBytes} from "node:crypto";
+import {createHash} from "crypto";
+import jwt from "jsonwebtoken";
+import {usersCollection, userFoldersCollection} from "./database_manager.js";
 
 
 
-async function login(req, res) {
+export async function login(req, res) {
 
     try {
         let email = req.body.email;
@@ -41,7 +35,7 @@ async function login(req, res) {
 
 
 
-async function register(req, res) {
+export async function register(req, res) {
     let salt = randomBytes(15).toString('hex');
 
     function hashing(password, salt) {
@@ -73,18 +67,12 @@ async function register(req, res) {
 }
 
 
-function getUserDetails(req, res) {
+export function getUserDetails(req, res) {
     usersCollection.findOne({"email": name.user.email}).then(user => {
-        res.status(200).json({
-            name: user.name,
-            surname: user.surname,
-            email: user.email,
-
-        }).catch(e => {
-            console.log(e);
-            res.status(500).send();
-        });
+        delete user.salt;
+        res.status(200).json({user});
+    }).catch(e => {
+        console.log(e);
+        res.status(500).send();
     });
 }
-
-module.exports = {register, login, getUserDetails}

@@ -1,30 +1,23 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import {register, login, getUserDetails} from "./user.js";
+import {authenticateToken} from "./middleware.js";
+import {showFolders, addFolder, removeFolder, addElementToFolder, removeElementFromFolder, changeFolderName} from "./user_folders.js";
+import {showUserVault, addToVault, removeFromVault, updateElement} from "./user_vault.js";
+import {connect} from "./database_manager.js";
+import config from "./config.js";
 const app = express();
-const {register, login, getUserDetails} = require("./user");
-const {authenticateToken} = require("./middleware");
-const {showFolders, addFolder, removeFolder, addElementToFolder, removeElementFromFolder, changeFolderName} = require("./folders");
-const {showUserVault, addToVault, removeFromVault, updateElement} = require("./vault");
-const {connect} = require("./db_connect-close");
 
-
-
-//app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-
 app.use(cors({
     credentials: true,
     origin: 'http://localhost:8080',
-    // //allow all headers
-    // allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Headers', 'Access-Control-Allow-Methods', 'Access-Control-Allow-Credentials', 'Access-Control-Max-Age', 'Access-Control-Request-Headers', 'Access-Control-Request-Method'],
-    // //allow all methods
-    // methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD'],
 }));
 app.options('*', cors());
 app.set('view engine', 'ejs');
-con().then()
+startConnection().then()
 
-async function con() {
+async function startConnection() {
     await connect();
 }
 
@@ -38,8 +31,31 @@ async function con() {
 
 //-----------------Home-----------------
 // app.get('/', (req, res) => {
-//     res.redirect('/login');
+//     res.redirect('/encryptiontest');
 // });
+
+
+//-----------------Encryptiontest-----------------
+// app.get('/encryptiontest', (req, res) => {
+//
+//     const data = {
+//         "username": "test",
+//         "password": "test"
+//     }
+//     console.log("Data: " + data);
+//     let  encrypted = encryptData(JSON.stringify(data));
+//     console.log("Crypt: " + encrypted);
+//     let decrypted = decryptData(encrypted);
+//     console.log("Decrypt: " + decrypted);
+//     //convert decrypted to json
+//     let decryptedJson = JSON.parse(decrypted);
+//     console.log("DecryptJson: " + JSON.stringify(decryptedJson));
+//
+// });
+
+
+
+
 
 //-----------------User Auth-----------------;
 
@@ -100,7 +116,8 @@ app.delete('/api/folders/element/:params', authenticateToken, async (req, res) =
 
 
 
+
 //-----------------Port-----------------
-app.listen(3000, () => {
+app.listen(config.port, () => {
     console.log('Listening on port 3000');
 });
