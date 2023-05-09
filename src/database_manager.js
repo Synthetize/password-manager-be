@@ -12,6 +12,7 @@ const connection = new MongoClient(db.uri, {
 export const usersCollection = connection.db(db.dbName).collection(db.user);
 export const  userVaultCollection = connection.db(db.dbName).collection(db.vault);
 export const userFoldersCollection = connection.db(db.dbName).collection(db.folders);
+export const userTokensCollection = connection.db(db.dbName).collection(db.tokens);
 
 export async function connect() {
     try {

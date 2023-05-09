@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import {register, login, getUserDetails, changeUserDetails, changeUserPassword} from "./user.js";
-import {authenticateToken} from "./middleware.js";
+import {register, login, getUserDetails, changeUserDetails, changeUserPassword, logout} from "./user.js";
+import {authenticateToken, refreshToken} from "./token_handler.js";
 import {showFolders, addFolder, removeFolder, addElementToFolder, removeElementFromFolder, changeFolderName} from "./user_folders.js";
 import {showUserVault, addToVault, removeFromVault, updateElement} from "./user_vault.js";
 import {connect} from "./database_manager.js";
@@ -22,11 +22,13 @@ async function startConnection() {
 }
 
 
+import {usersCollection} from "./database_manager.js";
+
 //-----------------Middleware-----------------
-// app.get('/testjwt', authenticateToken, async (req, res) => {
-//     res.json(await usersCollection.findOne({"email": req.user.email}));
-// });
-//
+app.get('/testjwt', authenticateToken, async (req, res) => {
+    res.json(await usersCollection.findOne({"email": req.user.email}));
+});
+
 
 
 //-----------------Home-----------------
@@ -54,9 +56,6 @@ async function startConnection() {
 // });
 
 
-
-
-
 //-----------------User Auth-----------------;
 
 app.post('/api/login', async (req, res) => {
@@ -65,6 +64,16 @@ app.post('/api/login', async (req, res) => {
 
 app.post('/api/register', async (req, res) => {
     await register(req, res);
+});
+
+app.delete('/api/logout/:token', async (req, res) => {
+    logout(req, res);
+})
+
+
+///-----------------Token Handler-----------------
+app.post('/api/token', (req, res) => {
+    refreshToken(req, res);
 });
 
 

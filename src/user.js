@@ -2,9 +2,11 @@
 import {randomBytes} from "node:crypto";
 import {createHash} from "crypto";
 import jwt from "jsonwebtoken";
-import {usersCollection, userFoldersCollection} from "./database_manager.js";
+import {usersCollection, userFoldersCollection, userTokensCollection} from "./database_manager.js";
+import config from "./config.js";
+const {token} = config
 
-
+import {authenticateToken, generateAccessToken, generateRefreshToken} from "./token_handler.js";
 
 export async function login(req, res) {
 
@@ -15,10 +17,15 @@ export async function login(req, res) {
         let hashingPass = createHash('sha256').update(pass.concat(userFromDB.salt)).digest('hex');
         if ( hashingPass === userFromDB.password) {
             //creating jwt token using email, name and surname as payload
-            const accessToken = jwt.sign({email: userFromDB.email, name: userFromDB.name, surname: userFromDB.surname}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '5h'});
+            const accessToken = generateAccessToken(userFromDB.email, userFromDB.name, userFromDB.surname);
+            const refreshToken = generateRefreshToken(userFromDB.email, userFromDB.name, userFromDB.surname);
+            userTokensCollection.insertOne({refreshToken: refreshToken}).catch(
+                e => console.log(e)
+            );
             console.log("Login successful");
             res.status(200).json({
                 accessToken: accessToken,
+                refreshToken: refreshToken,
                 email: userFromDB.email,
                 name: userFromDB.name,
                 surname: userFromDB.surname
@@ -118,4 +125,13 @@ export function changeUserPassword(req, res) {
         console.log(e);
         res.status(500).send()
     });
+}
+
+export function logout(req, res) {
+    userTokensCollection.deleteOne({"refreshToken": req.params.token}).then(() => {
+        res.status(204).send();
+    }).catch(e => {
+        console.log(e);
+        res.status(500).send();
+    })
 }

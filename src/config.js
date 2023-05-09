@@ -11,9 +11,10 @@ export default {
         user: process.env.USER_COLLECTION,
         vault: process.env.VAULT_COLLECTION,
         folders: process.env.FOLDERS_COLLECTION,
+        tokens: process.env.TOKENS_COLLECTION,
     },
 
-    jwt: {
+    token: {
         jwtSecret: process.env.ACCESS_TOKEN_SECRET,
         jwtRefresh: process.env.REFRESH_TOKEN_SECRET,
     },

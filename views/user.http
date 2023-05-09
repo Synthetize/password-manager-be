@@ -33,8 +33,15 @@ Content-Type: application/json
 {"oldpassword":"1234","newpassword":"1234"}
 
 
+###
+GET /testjwt HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoicGlwcG8iLCJzdXJuYW1lIjoiZ3JhbmRlIiwiaWF0IjoxNjgzNjI4MDUxLCJleHAiOjE2ODM2MjgwNjZ9._zr7KZGm8G67p3GovYQ5LMvcIP3dA5J8n5P6QIPQN0Q
 
 
+###logout
+DELETE /api/logout/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoicGlwcG8iLCJzdXJuYW1lIjoiZ3JhbmRlIiwiaWF0IjoxNjgzNjI4NTI5fQ.EXEFOKKFSnJw9aDpf8E1aP4xFxqsHvE7t_5vVcyy9Mo HTTP/1.1
+Host: localhost:3000
 
 
 
