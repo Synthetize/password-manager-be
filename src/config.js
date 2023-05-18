@@ -25,8 +25,4 @@ export default {
         method: process.env.ENCRYPTION_METHOD,
     },
 
-    // secret_key: SECRET_KEY,
-    // secret_iv: SECRET_IV,
-    // encryption_method: ENCRYPTION_METHOD,
-
 }

@@ -19,7 +19,7 @@ export async function login(req, res) {
             //creating jwt token using email, name and surname as payload
             const accessToken = generateAccessToken(userFromDB.email, userFromDB.name, userFromDB.surname);
             const refreshToken = generateRefreshToken(userFromDB.email, userFromDB.name, userFromDB.surname);
-            userTokensCollection.insertOne({refreshToken: refreshToken}).catch(
+            userTokensCollection.insertOne({refreshToken: refreshToken, creationDate: new Date()}).catch(
                 e => console.log(e)
             );
             console.log("Login successful");

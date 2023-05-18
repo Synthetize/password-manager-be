@@ -1,11 +1,20 @@
 import express from 'express';
 import cors from 'cors';
 import {register, login, getUserDetails, changeUserDetails, changeUserPassword, logout} from "./user.js";
-import {authenticateToken, refreshToken} from "./token_handler.js";
-import {showFolders, addFolder, removeFolder, addElementToFolder, removeElementFromFolder, changeFolderName} from "./user_folders.js";
+import {authenticateToken, generateAccessToken, refreshToken, generateRefreshToken} from "./token_handler.js";
+import {
+    showFolders,
+    addFolder,
+    removeFolder,
+    addElementToFolder,
+    removeElementFromFolder,
+    changeFolderName
+} from "./user_folders.js";
 import {showUserVault, addToVault, removeFromVault, updateElement} from "./user_vault.js";
-import {connect} from "./database_manager.js";
+import {connect, userTokensCollection} from "./database_manager.js";
 import config from "./config.js";
+import jwt from "jsonwebtoken";
+
 const app = express();
 
 app.use(express.json());
@@ -13,48 +22,8 @@ app.use(cors({
     credentials: true,
     origin: 'http://localhost:8080',
 }));
-app.options('*', cors());
-app.set('view engine', 'ejs');
-startConnection().then()
 
-async function startConnection() {
-    await connect();
-}
-
-
-import {usersCollection} from "./database_manager.js";
-
-//-----------------Middleware-----------------
-app.get('/testjwt', authenticateToken, async (req, res) => {
-    res.json(await usersCollection.findOne({"email": req.user.email}));
-});
-
-
-
-//-----------------Home-----------------
-// app.get('/', (req, res) => {
-//     res.redirect('/encryptiontest');
-// });
-
-
-//-----------------Encryptiontest-----------------
-// app.get('/encryptiontest', (req, res) => {
-//
-//     const data = {
-//         "username": "test",
-//         "password": "test"
-//     }
-//     console.log("Data: " + data);
-//     let  encrypted = encryptData(JSON.stringify(data));
-//     console.log("Crypt: " + encrypted);
-//     let decrypted = decryptData(encrypted);
-//     console.log("Decrypt: " + decrypted);
-//     //convert decrypted to json
-//     let decryptedJson = JSON.parse(decrypted);
-//     console.log("DecryptJson: " + JSON.stringify(decryptedJson));
-//
-// });
-
+await connect();
 
 //-----------------User Auth-----------------;
 
@@ -113,7 +82,7 @@ app.get('/api/folders', authenticateToken, async (req, res) => {
     await showFolders(req, res);
 });
 
-app.post('/api/folders', authenticateToken,(req, res) => {
+app.post('/api/folders', authenticateToken, (req, res) => {
     addFolder(req, res);
 });
 
@@ -132,8 +101,6 @@ app.post('/api/folders/element', authenticateToken, async (req, res) => {
 app.delete('/api/folders/element/:params', authenticateToken, async (req, res) => {
     await removeElementFromFolder(req, res);
 })
-
-
 
 
 //-----------------Port-----------------
