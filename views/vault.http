@@ -20,7 +20,7 @@ Host: localhost:3000
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgzMTA4MzE1LCJleHAiOjE2ODMxMjYzMTV9.LdVhEE7AVNP5tlmCnCQZQAbKR1dKsiGctLXOpPXuQNQ
 Content-Type: application/json
 
-{"elements":["64523259b9a51a40a19ee265", "64517c8d4162cf75dd873d68"]}
+{"elements":["64665dd237fad004508d806a"]}
 
 ###UPDATE ELEMENT
 PUT /api/vault/64517c8d4162cf75dd873d67 HTTP/1.1

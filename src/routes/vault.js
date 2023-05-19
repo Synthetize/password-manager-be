@@ -1,12 +1,21 @@
-import {userVaultCollection} from "./database_manager.js";
+import express from "express";
+const router = express.Router();
+import {userVaultCollection} from "../database_manager.js";
 import {ObjectId} from "mongodb";
-import {decryptData, encryptData} from "./encryption.js";
+import {decryptData, encryptData} from "../encryption.js";
+import {authenticateToken} from "../token_handler.js";
+
+//changes
+// put /api/vault/:element -> /api/vault?element=element_id
 
 
-export function showUserVault(req, res) {
+
+
+//show the user's vault
+router.get('/api/vault', authenticateToken, (req, res) => {
     userVaultCollection.find({"user_id": req.user.email}).toArray().then(vault => {
         vault = vault.map(element => {
-            let data = {
+            const data = {
                 "_id": element._id,
                 ...JSON.parse(decryptData(element.encryptedBody)),
                 "user_id": element.user_id,
@@ -19,12 +28,11 @@ export function showUserVault(req, res) {
         console.log("Error retrieving vault");
         res.status(404).send();
     });
-}
+});
 
-
-export async function addToVault(req, res) {
-    //insert the element in the vault
-    let encryptedBody = encryptData(JSON.stringify(req.body));
+//add an element to the vault
+router.post('/api/vault', authenticateToken, (req, res) => {
+    const encryptedBody = encryptData(JSON.stringify(req.body));
     userVaultCollection.insertOne({
         encryptedBody,
         user_id: req.user.email,
@@ -36,11 +44,12 @@ export async function addToVault(req, res) {
         console.log("Error adding element to vault");
         res.status(404).send();
     });
-}
+});
 
-
-export function removeFromVault(req, res) {
-    let objsArray = req.body.elements.map(element => new ObjectId(element));
+//remove an element from the vault
+router.delete('/api/vault', authenticateToken, (req, res) => {
+    //transform the array of strings into an array of ObjectIds
+    const objsArray = req.body.elements.map(element => new ObjectId(element));
     userVaultCollection.deleteMany({"user_id": req.user.email, "_id": {$in: objsArray} }).then(() => {
         console.log("Elements removed from vault");
         res.status(200).send();
@@ -48,11 +57,12 @@ export function removeFromVault(req, res) {
         console.log("Element not found");
         res.status(404).send();
     });
-}
+});
 
-export function updateElement(req, res) {
-    let encryptedData = encryptData(JSON.stringify(req.body));
-    userVaultCollection.updateOne({"user_id": req.user.email, "_id": new ObjectId(req.params.element)}, {$set: {encryptedBody: encryptedData}}).then(() => {
+//update an element from the vault
+router.put('/api/vault', authenticateToken,(req, res) => {
+    const encryptedData = encryptData(JSON.stringify(req.body));
+    userVaultCollection.updateOne({"user_id": req.user.email, "_id": new ObjectId(req.query.element)}, {$set: {encryptedBody: encryptedData}}).then(() => {
         console.log("Element updated");
         res.status(200).send();
     }).catch(e => {
@@ -60,5 +70,13 @@ export function updateElement(req, res) {
         console.log(e);
         res.status(404).send();
     });
-}
+});
+
+
+
+export default router;
+
+
+
+
 

@@ -1,7 +1,7 @@
 ###SHOW FOLDER
 GET /api/folders HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgzMTA4MzE1LCJleHAiOjE2ODMxMjYzMTV9.LdVhEE7AVNP5tlmCnCQZQAbKR1dKsiGctLXOpPXuQNQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoicGllcmNhbGxvIiwic3VybmFtZSI6ImhvY2FtYmlhc3RvaWxjb2dub21lIiwiaWF0IjoxNjg0NDg3NTk1fQ.Y2SQfTFdNEPPfXQYJH58htITF0GBdTiRyKNGSKAx880
 
 ###ADD FOLDER
 POST /api/folders HTTP/1.1
