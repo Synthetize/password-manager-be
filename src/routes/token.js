@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import {userTokensCollection} from "../utils/database.js";
 const router = express.Router();
 
+//refresh token if the time passed after the last refresh is less than 30 minutes
 router.post('/api/token', (req, res) => {
     const refreshToken = req.body.token
     if (refreshToken == null) return res.sendStatus(401)

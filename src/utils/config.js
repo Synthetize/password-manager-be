@@ -1,6 +1,5 @@
 import dotenv from 'dotenv'
 dotenv.config()
-// {SECRET_KEY, SECRET_IV, ENCRYPTION_METHOD } = process.env
 export default {
     port: process.env.PORT,
 

@@ -1,13 +1,7 @@
 import express from "express";
 import {userFoldersCollection} from "../utils/database.js";
 import {authenticateToken} from "../utils/token_handler.js";
-
 const router = express.Router();
-//changes
-// GET api/folders/change ->  put api/folders
-// DELETE api/folders/:params -> delete api/folders?ds=pierino&ids=newfoldername&ids=...
-// POST api/folders/element -> post api/folders/add
-// DELETE api/folders/element/:params -> delete api/folders/remove?folder=pierino&element="elementID"
 
 //show the user's folders
 router.get('/api/folders', authenticateToken, (req, res) => {

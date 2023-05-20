@@ -6,11 +6,6 @@ import {ObjectId} from "mongodb";
 import {decryptData, encryptData} from "../utils/encryption.js";
 import {authenticateToken, removeExistingRefreshToken} from "../utils/token_handler.js";
 
-//changes
-// put /api/vault/:element -> /api/vault?element=element_id
-// delete /api/vault/:element -> /api/vault?elements=...&elements=...
-
-
 //show the user's vault
 router.get('/api/vault', authenticateToken, (req, res) => {
     userVaultCollection.find({"user_id": req.user.email}).toArray().then(vault => {

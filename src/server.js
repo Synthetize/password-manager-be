@@ -4,14 +4,19 @@ import userRouter from './routes/user.js';
 import vaultRouter from './routes/vault.js';
 import foldersRouter from './routes/folders.js';
 import tokenRouter from './routes/token.js';
-import {connect, userFoldersCollection, userTokensCollection, userVaultCollection} from "./utils/database.js";
+import {connect} from "./utils/database.js";
 import config from "./utils/config.js";
-import {authenticateToken} from "./utils/token_handler.js";
-import jwt from "jsonwebtoken";
+
+import mongoSanitize from "express-mongo-sanitize";
 
 const app = express();
-
 app.use(express.json());
+app.use(mongoSanitize({
+    onSanitize: ({req, key}) => {
+        console.log(`This request[${key}] is sanitized`);
+    }
+}));
+
 app.use(cors({
     credentials: true,
     origin: 'http://localhost:8080',

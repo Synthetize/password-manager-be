@@ -9,14 +9,6 @@ import {
     generateRefreshToken,
     removeExistingRefreshToken
 } from "../utils/token_handler.js";
-//cahanged
-// /api/login -> /api/user/login
-// /api/register -> /api/user/register
-// /api/logout -> /api/user/logout?refreshToken=...
-// /api/user/:userid -> /api/user/showdetails?email=...
-// /api/user/details -> /api/user/changedetails
-// /api/user/password -> /api/user/changepassword
-
 
 router.post('/api/user/login',removeExistingRefreshToken, async (req, res) => {
     try {
@@ -131,7 +123,7 @@ router.post('/api/user/changepassword', authenticateToken, (req, res) => {
         }
         try {
             usersCollection.updateOne({"email": req.user.email, "password": oldPassHashing}, {$set: {"password": newPassHashing, "salt": salt}})
-                .then(r => res.status(200).send());
+                .then(() => res.status(200).send());
         } catch (e) {
             console.log(e);
             res.status(500).send();
