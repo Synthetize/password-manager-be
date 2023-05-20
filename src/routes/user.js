@@ -2,8 +2,8 @@ import express from "express";
 const router = express.Router();
 import {randomBytes} from "node:crypto";
 import {createHash} from "crypto";
-import {usersCollection, userFoldersCollection, userTokensCollection} from "../database_manager.js";
-import {authenticateToken, generateAccessToken, generateRefreshToken} from "../token_handler.js";
+import {usersCollection, userFoldersCollection, userTokensCollection} from "../utils/database.js";
+import {authenticateToken, generateAccessToken, generateRefreshToken} from "../utils/token_handler.js";
 //cahanged
 // /api/login -> /api/user/login
 // /api/register -> /api/user/register

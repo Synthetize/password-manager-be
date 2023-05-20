@@ -1,8 +1,12 @@
 import express from 'express';
 import cors from 'cors';
-import {authenticateToken, generateAccessToken, refreshToken, generateRefreshToken} from "./token_handler.js";
-import {connect, userTokensCollection} from "./database_manager.js";
-import config from "./config.js";
+import userRouter from './routes/user.js';
+import vaultRouter from './routes/vault.js';
+import foldersRouter from './routes/folders.js';
+import tokenRouter from './routes/token.js';
+import {connect, userFoldersCollection, userVaultCollection} from "./utils/database.js";
+import config from "./utils/config.js";
+import {authenticateToken} from "./utils/token_handler.js";
 
 const app = express();
 
@@ -14,17 +18,15 @@ app.use(cors({
 
 await connect();
 
-
-import userRouter from './routes/user.js';
-import vaultRouter from './routes/vault.js';
-import foldersRouter from './routes/folders.js';
 app.use(userRouter);
 app.use(vaultRouter);
 app.use(foldersRouter);
+app.use(tokenRouter);
 
-app.post('/api/token', (req, res) => {
-    refreshToken(req, res);
-});
+app.post('/test', authenticateToken, async (req, res) => {
+
+})
+
 
 app.listen(config.port, () => {
     console.log('Listening on port 3000');

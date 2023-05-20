@@ -1,7 +1,6 @@
 import crypto from 'crypto'
 import config from './config.js'
 
-//const { secret_key, secret_iv, encryption_method } = config
 const {encryption} = config
 const secret_key = encryption.secret_key
 const secret_iv = encryption.secret_iv

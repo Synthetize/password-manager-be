@@ -1,6 +1,6 @@
 import express from "express";
-import {userFoldersCollection} from "../database_manager.js";
-import {authenticateToken} from "../token_handler.js";
+import {userFoldersCollection} from "../utils/database.js";
+import {authenticateToken} from "../utils/token_handler.js";
 
 const router = express.Router();
 //changes
