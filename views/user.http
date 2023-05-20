@@ -4,7 +4,7 @@ POST /api/user/login HTTP/1.1
 Host: localhost:3000
 Content-Type: application/json
 
-{"email":"e@email","password":"1234"}
+{"email":"e@piero1234","password":"1234"}
 
 
 ###REGISTRATION
@@ -12,7 +12,7 @@ POST /api/user/register HTTP/1.1
 Host: localhost:3000
 Content-Type: application/json
 
-{"email":"e@pippazio2","password":"1234","name":"name","surname":"surname"}
+{"email":"e@piero1234","password":"1234","name":"name","surname":"surname"}
 
 ###logout
 DELETE /api/user/logout?refreshtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoicGlwcG8iLCJzdXJuYW1lIjoiZ3JhbmRlIiwiaWF0IjoxNjg0NDI2ODA3fQ.9xDyyuoMJfGvRG-o81PKH7CViRRVacvqhyeCxeeKltU

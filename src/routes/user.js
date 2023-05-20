@@ -3,7 +3,12 @@ const router = express.Router();
 import {randomBytes} from "node:crypto";
 import {createHash} from "crypto";
 import {usersCollection, userFoldersCollection, userTokensCollection} from "../utils/database.js";
-import {authenticateToken, generateAccessToken, generateRefreshToken} from "../utils/token_handler.js";
+import {
+    authenticateToken,
+    generateAccessToken,
+    generateRefreshToken,
+    removeExistingRefreshToken
+} from "../utils/token_handler.js";
 //cahanged
 // /api/login -> /api/user/login
 // /api/register -> /api/user/register
@@ -13,7 +18,7 @@ import {authenticateToken, generateAccessToken, generateRefreshToken} from "../u
 // /api/user/password -> /api/user/changepassword
 
 
-router.post('/api/user/login', async (req, res) => {
+router.post('/api/user/login',removeExistingRefreshToken, async (req, res) => {
     try {
         let email = req.body.email;
         let pass = req.body.password;
@@ -26,7 +31,6 @@ router.post('/api/user/login', async (req, res) => {
             userTokensCollection.insertOne({refreshToken: refreshToken, creationDate: new Date()}).catch(
                 e => console.log(e)
             );
-            console.log("Login successful");
             res.status(200).json({
                 accessToken: accessToken,
                 refreshToken: refreshToken,
@@ -34,12 +38,14 @@ router.post('/api/user/login', async (req, res) => {
                 name: userFromDB.name,
                 surname: userFromDB.surname
             });
+            console.log("Login successful");
         } else {
             console.log("Credentials not valid");
             res.status(401).send();
         }
-    } catch {
+    } catch (e){
         console.log("Login failed");
+        console.log(e);
         res.status(400).send()
     }
 });

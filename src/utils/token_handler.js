@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import config from "./config.js";
+import {userTokensCollection} from "./database.js";
 const {token} = config
 
 
@@ -24,6 +25,31 @@ export function authenticateToken(req, res, next) {
         next()
     });
 }
+
+export async function removeExistingRefreshToken(req, res, next) {
+    try {
+        let refreshTokens = await userTokensCollection.find({}).toArray().then(result => {
+            return result
+        })
+        let existingTokens= []
+        for(let obj of refreshTokens) {
+            let payload = jwt.decode(obj.refreshToken, {complete: true}).payload
+            if (payload.email === req.body.email) {
+                existingTokens.push(obj.refreshToken)
+            }
+        }
+        userTokensCollection.deleteMany({refreshToken: {$in: existingTokens}}).then(() => {
+            console.log(existingTokens)
+            console.log("Old Refresh Token removed from db")
+        })
+        next()
+    } catch (e) {
+        console.log(e)
+        return res.status(400).send()
+
+    }
+}
+
 
 
 

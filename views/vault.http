@@ -17,10 +17,10 @@ Content-Type: application/json
 ###REMOVE FROM VAULT
 DELETE /api/vault HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgzMTA4MzE1LCJleHAiOjE2ODMxMjYzMTV9.LdVhEE7AVNP5tlmCnCQZQAbKR1dKsiGctLXOpPXuQNQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoicGllcmNhbGxvIiwic3VybmFtZSI6ImhvY2FtYmlhc3RvaWxjb2dub21lIiwiaWF0IjoxNjg0NDg3NTk1fQ.Y2SQfTFdNEPPfXQYJH58htITF0GBdTiRyKNGSKAx880
 Content-Type: application/json
 
-{"elements":["64665dd237fad004508d806a"]}
+{"elements":["6468894f4dfe198a2f34ec44"]}
 
 ###UPDATE ELEMENT
 PUT /api/vault/64517c8d4162cf75dd873d67 HTTP/1.1

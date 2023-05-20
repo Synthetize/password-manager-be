@@ -4,7 +4,7 @@ const router = express.Router();
 import {userFoldersCollection, userVaultCollection} from "../utils/database.js";
 import {ObjectId} from "mongodb";
 import {decryptData, encryptData} from "../utils/encryption.js";
-import {authenticateToken} from "../utils/token_handler.js";
+import {authenticateToken, removeExistingRefreshToken} from "../utils/token_handler.js";
 
 //changes
 // put /api/vault/:element -> /api/vault?element=element_id
@@ -31,7 +31,7 @@ router.get('/api/vault', authenticateToken, (req, res) => {
 });
 
 //add an element to the vault
-router.post('/api/vault', authenticateToken, (req, res) => {
+router.post('/api/vault', await removeExistingRefreshToken, (req, res) => {
     const encryptedBody = encryptData(JSON.stringify(req.body));
     userVaultCollection.insertOne({
         encryptedBody,
