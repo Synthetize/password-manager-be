@@ -6,7 +6,7 @@ const {token} = config
 
 
 export function generateAccessToken(email, name, surname) {
-    return jwt.sign({email: email, name: name, surname: surname}, token.jwtSecret, /*{expiresIn: '15m'}*/);
+    return jwt.sign({email: email, name: name, surname: surname}, token.jwtSecret, {expiresIn: '15m'});
 }
 
 export function generateRefreshToken(email, name, surname) {
