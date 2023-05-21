@@ -1,0 +1,6 @@
+###refresh token
+POST /api/token HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+
+{"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAcGllcm8xMjM0NSIsIm5hbWUiOiJuYW1lIiwic3VybmFtZSI6InN1cm5hbWUiLCJpYXQiOjE2ODQ2NTY2MjF9.lQXzWlTaCNCEatxCvW2rtwI7UaTTMW6Jdu49wbC0-hI"}

@@ -8,22 +8,21 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1ha
 ###ADD TO VAULT
 POST /api/vault HTTP/1.1
 Host: localhost:3000
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgzMTA4NDIxLCJleHAiOjE2ODMxMjY0MjF9.6kNpxvnJ2YNo5NJul8Bd3YF6x9x6ImkAef3tcGmSqB8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoicGllcmNhbGxvIiwic3VybmFtZSI6InN1cm5hbWUiLCJpYXQiOjE2ODQ2NTc1NjYsImV4cCI6MTY4NDY1ODQ2Nn0.V-xBTNLJ-iokQEjKRsDhEgy17ZyvKMnol0nGyRwaMTM"
 Content-Type: application/json
 
-{"name": "noRWEFDSo","email":"email@sito","password":"pass4","link":"sito", "notes":"note sito 4"}
+{"name": "pierino","email":"email@sito","password":"pass4","link":"sito", "notes":"note sito 4"}
 
 
 ###REMOVE FROM VAULT
-DELETE /api/vault HTTP/1.1
+DELETE /api/vault?elements[]=....&elements[]=... HTTP/1.1
 Host: localhost:3000
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoicGllcmNhbGxvIiwic3VybmFtZSI6ImhvY2FtYmlhc3RvaWxjb2dub21lIiwiaWF0IjoxNjg0NDg3NTk1fQ.Y2SQfTFdNEPPfXQYJH58htITF0GBdTiRyKNGSKAx880
 Content-Type: application/json
 
-{"elements":["6468894f4dfe198a2f34ec44"]}
 
 ###UPDATE ELEMENT
-PUT /api/vault/64517c8d4162cf75dd873d67 HTTP/1.1
+PUT /api/vault?element=64517c8d4162cf75dd873d67 HTTP/1.1
 Host: localhost:3000
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1haWwiLCJuYW1lIjoibmFtZSIsInN1cm5hbWUiOiJzdXJuYW1lIiwiaWF0IjoxNjgzMTA4MzE1LCJleHAiOjE2ODMxMjYzMTV9.LdVhEE7AVNP5tlmCnCQZQAbKR1dKsiGctLXOpPXuQNQ
 Content-Type: application/json

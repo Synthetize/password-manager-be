@@ -3,7 +3,8 @@ import {generateAccessToken} from "../utils/token_handler.js";
 import jwt from "jsonwebtoken";
 import {userTokensCollection} from "../utils/database.js";
 const router = express.Router();
-
+import config from "../utils/config.js";
+const {token} = config;
 //refresh token if the time passed after the last refresh is less than 30 minutes
 router.post('/api/token', (req, res) => {
     const refreshToken = req.body.token

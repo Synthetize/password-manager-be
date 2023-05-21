@@ -26,7 +26,7 @@ router.get('/api/vault', authenticateToken, (req, res) => {
 });
 
 //add an element to the vault
-router.post('/api/vault', await removeExistingRefreshToken, (req, res) => {
+router.post('/api/vault', authenticateToken, (req, res) => {
     const encryptedBody = encryptData(JSON.stringify(req.body));
     userVaultCollection.insertOne({
         encryptedBody,

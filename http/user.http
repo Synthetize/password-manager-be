@@ -19,6 +19,9 @@ DELETE /api/user/logout?refreshtoken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbW
 Host: localhost:3000
 
 ###SHOW USER DETAILS
+GET /api/user/showdetails?email=e@email HTTP/1.1
+Host: localhost:3000
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAcGllcm8xMjM0NSIsIm5hbWUiOiJuYW1lIiwic3VybmFtZSI6InN1cm5hbWUiLCJpYXQiOjE2ODQ2NTY2MjF9.lQXzWlTaCNCEatxCvW2rtwI7UaTTMW6Jdu49wbC0-hI
 
 ###CHANGE USER DETAILS
 POST /api/user/changedetails HTTP/1.1
@@ -27,9 +30,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVAZW1ha
 Content-Type: application/json
 
 {"field":"surname","value":"hocambiastoilcognome"}
-
-
-
 
 
 ###CHANGE USER PASSWORD
