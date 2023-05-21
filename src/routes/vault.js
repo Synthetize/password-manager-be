@@ -31,14 +31,15 @@ router.post('/api/vault', authenticateToken, (req, res) => {
     userVaultCollection.insertOne({
         encryptedBody,
         user_id: req.user.email,
-    }).then(() => {
+    }).then(queryResult => {
         console.log("Element added to vault");
-        res.status(201).send();
+        res.json({id: queryResult.insertedId});
     }).catch(e => {
         console.log(e);
         console.log("Error adding element to vault");
         res.status(404).send();
     });
+
 });
 
 //remove an element from the vault
