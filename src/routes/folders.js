@@ -1,6 +1,7 @@
 import express from "express";
 import {userFoldersCollection} from "../utils/database.js";
 import {authenticateToken} from "../utils/token_handler.js";
+
 const router = express.Router();
 
 //show the user's folders
@@ -16,20 +17,47 @@ router.get('/api/folders', authenticateToken, (req, res) => {
     });
 });
 
-//add a folder
-router.post('/api/folders', authenticateToken, (req, res) => {
-    userFoldersCollection.updateOne({"user_id": req.user.email}, {$set: {[req.body.newfolder]: []}}).then(() => {
-        console.log("Folder added");
-        res.status(200).send();
-    }).catch(e => {
+
+async function checkIfFolderNameExist(userID, folderName) {
+    if (!folderName || folderName === "") {
+        return false;
+    }
+    try {
+        const folder = await userFoldersCollection.findOne({"user_id": userID})
+        return folder.hasOwnProperty(folderName);
+    } catch (e) {
         console.log(e);
-        res.status(404).send();
-    });
+        return false;
+    }
+}
+
+
+//add a folder
+router.post('/api/folders', authenticateToken, async (req, res) => {
+    if (await checkIfFolderNameExist(req.user.email, req.body.newfolder)) {
+        console.log("Folder name already used");
+        res.status(409).send();
+    } else {
+        userFoldersCollection.updateOne({"user_id": req.user.email}, {$set: {[req.body.newfolder]: []}}).then(() => {
+            console.log("Folder added");
+            res.status(200).send();
+        }).catch(e => {
+            console.log(e);
+            res.status(404).send();
+        });
+    }
 });
 
 
-//change a folder name
-router.put('/api/folders', authenticateToken, (req, res) => {
+//change folder name
+router.put('/api/folders', authenticateToken, async (req, res) => {
+
+    if (await checkIfFolderNameExist(req.user.email, req.body.newName)) {
+        console.log("Folder name already used");
+        res.status(409).send();
+        return
+    }
+
     userFoldersCollection.updateOne({"user_id": req.user.email}, {$rename: {[req.body.oldName]: req.body.newName}}).then((folder) => {
         if (folder.modifiedCount === 0) {
             console.log("Folder not found");
@@ -72,7 +100,7 @@ router.post('/api/folders/add', authenticateToken, (req, res) => {
 router.delete('/api/folders/remove', authenticateToken, (req, res) => {
     userFoldersCollection.updateOne({"user_id": req.user.email}, {$pull: {[req.query.folder]: req.query.element}}).then((result) => {
         console.log(result);
-        if(result.modifiedCount === 0){
+        if (result.modifiedCount === 0) {
             console.log("Folder or Element not found");
             res.status(404).send();
             return
